@@ -384,7 +384,37 @@ class ConsogazoilVehicule extends CommonObjectConsoGazoil {
 		}
 		
 		if (!$error) {
+			$sql = 'DELETE FROM '.MAIN_DB_PREFIX.'consogazoil_vehtake_extrafields WHERE fk_object = (SELECT rowid FROM '.MAIN_DB_PREFIX.'consogazoil_vehtake WHERE fk_vehicule = '.$this->id.')';
+			dol_syslog(get_class($this) . "::delete sql=" . $sql);
+			$resql = $this->db->query($sql);
+			if (! $resql) {
+				$error ++;
+				$this->errors[] = "Error " . $this->db->lasterror();
+			}
+		}
+		
+		if (!$error) {
 			$sql = 'DELETE FROM '.MAIN_DB_PREFIX.'consogazoil_vehtake WHERE fk_vehicule = '.$this->id;
+			dol_syslog(get_class($this) . "::delete sql=" . $sql);
+			$resql = $this->db->query($sql);
+			if (! $resql) {
+				$error ++;
+				$this->errors[] = "Error " . $this->db->lasterror();
+			}
+		}
+		
+		if (!$error) {
+			$sql = 'DELETE FROM '.MAIN_DB_PREFIX.'consogazoil_vehiculeservice_extrafields WHERE fk_object = (SELECT rowid FROM '.MAIN_DB_PREFIX.'consogazoil_vehiculeservice WHERE fk_vehicule = '.$this->id.')';
+			dol_syslog(get_class($this) . "::delete sql=" . $sql);
+			$resql = $this->db->query($sql);
+			if (! $resql) {
+				$error ++;
+				$this->errors[] = "Error " . $this->db->lasterror();
+			}
+		}
+		
+		if (!$error) {
+			$sql = 'DELETE FROM '.MAIN_DB_PREFIX.'consogazoil_vehiculeservice WHERE fk_vehicule = '.$this->id;
 			dol_syslog(get_class($this) . "::delete sql=" . $sql);
 			$resql = $this->db->query($sql);
 			if (! $resql) {
